@@ -1,20 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
-</head>
-<body>
-    <ul>
-        {% for user in users %}
-        <li>
-            {{user.name}}
-        </li>
-        <a href="{{url_for('delete', id=user.id )}}">Deletar</a>
-        <a href="{{url_for('view', id=user.id )}}">Visualizar</a>
+{% extends 'base.html' %}
 
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% block content %}
+
+<div class="mt-5">
+  <a href="{{ url_for('index') }}" class="btn btn-info">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    Voltar
+  </a>
+  
+  <table class="table table-striped mt-3">
+    <tbody>
+      <tr>
+        <td>
+          {{ user.id }}     
+        </td>
+        <td>
+          {{ user.name }}
+        </td>
+        <td>
+          {{ user.email }}
+        </td>
+        <td>
+          {{ user.profile.photo }}
+        </td>
+        <td>
+          <a class="btn btn-danger btn-sm" href="{{ url_for('delete', id=user.id) }}">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+{% endblock %}
