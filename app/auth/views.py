@@ -19,11 +19,11 @@ def register():
         user = User()
         user.name = form.name.data
         user.email = form.email.data
-        user.password = generate_password_hash(form.password.data)
+        user.password = form.password.data
 
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for("index"))
+        return redirect(url_for("user.index"))
     return render_template("register.html", form=form)
 
 @auth.route("/login", methods=["GET", "POST"])
@@ -37,12 +37,8 @@ def login():
             flash("Credênciais incorretas", "danger")
             return redirect(url_for(".login"))
 
-        if not check_password_hash(user.password, form.password.data):
-            flash("Credênciais incorretas", "danger")
-            return redirect(url_for(".login"))
-
         login_user(user, remember=form.remember.data, duration=timedelta(days=7))
-        return redirect(url_for("index"))
+        return redirect(url_for("user.index"))
 
     return render_template("login.html", form=form)
 
@@ -50,4 +46,4 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("index"))
+    return redirect(url_for("user.index"))
